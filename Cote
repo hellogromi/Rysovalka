@@ -1,0 +1,69 @@
+from tkinter import *
+from tkinter.colorchooser import *
+
+def choose(inputic):
+    global state, line_size
+    if inputic == "plus":
+        if line_size <= 98:
+            line_size += 2
+        return
+    elif inputic == "minus":
+        if line_size >= 2:
+            line_size -= 2
+        return
+    state = inputic
+def paint(event):
+    if event.widget.__class__ is not Canvas:
+        return
+    if state == 'circle':
+        canvas.create_oval(event.x - line_size, event.y - line_size, event.x + line_size, event.y + line_size, fill=color, outline=color)
+    elif state == 'square':
+        canvas.create_rectangle(event.x - line_size, event.y - line_size, event.x + line_size, event.y + line_size, fill=color, outline=color)
+    elif state == 'line1':
+        canvas.create_line(event.x - line_size, event.y - line_size, event.x + line_size, event.y + line_size, fill=color)
+    elif state == 'line2':
+        canvas.create_line(event.x + line_size, event.y - line_size, event.x - line_size, event.y + line_size, fill=color)
+
+def rubber(event):
+    if event.widget.__class__ is not Canvas:
+        return
+    canvas.create_oval(event.x - line_size, event.y - line_size, event.x + line_size, event.y + line_size, fill='white', outline="white")
+
+state = 'circle'
+line_size = 2
+color = "black"
+
+root = Tk()
+
+root.geometry('600x400')
+
+root.title('Рисовалка')
+
+root['bg'] = 'gray75'
+
+canvas = Canvas(width=540, height=400, bg='white')
+canvas.grid(row=0, column=0, rowspan=7)
+
+square_btn = Button(root, text="🟥", font=(None, 23), command=lambda: choose("square"))
+square_btn.grid(row=0, column=1)
+circle_btn = Button(root, text="🔴", font=(None, 23), command=lambda: choose("circle"))
+circle_btn.grid(row=1, column=1)
+line1_btn = Button(root, text="↘️", font=(None, 18), command=lambda: choose("line1"))
+line1_btn.grid(row=2, column=1)
+line2_btn = Button(root, text="↙️", font=(None, 18), command=lambda: choose("line2"))
+line2_btn.grid(row=3, column=1)
+plus_btn = Button(root, text="➕", font=(None, 21), command=lambda: choose("plus"))
+plus_btn.grid(row=4, column=1)
+minus_btn = Button(root, text="➖", font=(None, 21), command=lambda: choose("minus"))
+minus_btn.grid(row=5, column=1)
+
+
+size = Label(root, text=line_size, font=(None, 25))
+size.grid(row=6, column=1)
+
+root.bind_all('<1>', paint)
+root.bind_all('<B1-Motion>', paint)
+root.bind_all('<3>', rubber)
+root.bind_all('<B3-Motion>', rubber)
+
+root.mainloop()
