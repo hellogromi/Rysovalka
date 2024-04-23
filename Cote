@@ -1,17 +1,21 @@
 from tkinter import *
 from tkinter.colorchooser import *
-
 def choose(inputic):
     global state, line_size
     if inputic == "plus":
         if line_size <= 98:
             line_size += 2
+            size.configure(text=line_size)
         return
     elif inputic == "minus":
         if line_size >= 2:
             line_size -= 2
+            size.configure(text=line_size)
         return
     state = inputic
+
+def clear(event):
+    canvas.create_rectangle(0, 0, 600, 400, fill="white", outline="white")
 def paint(event):
     if event.widget.__class__ is not Canvas:
         return
@@ -29,20 +33,25 @@ def rubber(event):
         return
     canvas.create_oval(event.x - line_size, event.y - line_size, event.x + line_size, event.y + line_size, fill='white', outline="white")
 
+def colorchooser1(event):
+    global color
+    if event.widget.__class__ is not Canvas:
+        return
+    colorchoos = askcolor(title="Выбери цвет")
+    color = colorchoos[1]
+    size.configure(fg=color)
+
 state = 'circle'
 line_size = 2
 color = "black"
 
 root = Tk()
 
-root.geometry('600x400')
+root.geometry('1920x1080')
 
 root.title('Рисовалка')
 
 root['bg'] = 'gray75'
-
-canvas = Canvas(width=540, height=400, bg='white')
-canvas.grid(row=0, column=0, rowspan=7)
 
 square_btn = Button(root, text="🟥", font=(None, 23), command=lambda: choose("square"))
 square_btn.grid(row=0, column=1)
@@ -57,13 +66,15 @@ plus_btn.grid(row=4, column=1)
 minus_btn = Button(root, text="➖", font=(None, 21), command=lambda: choose("minus"))
 minus_btn.grid(row=5, column=1)
 
+canvas = Canvas(width=1800, height=900, bg='white')
+canvas.grid(row=0, column=0, rowspan=7)
 
-size = Label(root, text=line_size, font=(None, 25))
+size = Label(root, text=line_size, font=(None, 25), fg=color)
 size.grid(row=6, column=1)
 
 root.bind_all('<1>', paint)
 root.bind_all('<B1-Motion>', paint)
 root.bind_all('<3>', rubber)
 root.bind_all('<B3-Motion>', rubber)
-
-root.mainloop()
+root.bind_all('<BackSpace>', clear)
+root.bind_all('<2>', colorchooser1)
