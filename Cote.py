@@ -71,7 +71,7 @@ minus_btn.grid(row=0, column=6)
 canvas = Canvas(width=960, height=760, bg='white')
 canvas.grid(row=0, column=0, rowspan=7)
 
-size = Label(root, text=line_size, font=(None, 25), fg=color)
+size = Label(root, text=line_size, font=(None, 100), fg=color)
 size.grid(row=6, column=1)
 
 root.bind_all('<1>', paint)
