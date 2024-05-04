@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.colorchooser import *
+
 def choose(inputic):
     global state, line_size
     if inputic == "plus":
@@ -15,7 +16,8 @@ def choose(inputic):
     state = inputic
 
 def clear(event):
-    canvas.create_rectangle(0, 0, 600, 400, fill="white", outline="white")
+    canvas.create_rectangle(0, 0, 1000, 800, fill="white", outline="white")
+
 def paint(event):
     if event.widget.__class__ is not Canvas:
         return
@@ -47,26 +49,26 @@ color = "black"
 
 root = Tk()
 
-root.geometry('600x400')
+root.geometry('1920x1080')
 
 root.title('Рисовалка')
 
 root['bg'] = 'gray75'
 
-square_btn = Button(root, text="🟥", font=(None, 23), command=lambda: choose("square"))
+square_btn = Button(root, text="🟥", font=(None, 58), command=lambda: choose("square"))
 square_btn.grid(row=0, column=1)
-circle_btn = Button(root, text="🔴", font=(None, 23), command=lambda: choose("circle"))
-circle_btn.grid(row=1, column=1)
-line1_btn = Button(root, text="↘️", font=(None, 18), command=lambda: choose("line1"))
-line1_btn.grid(row=2, column=1)
-line2_btn = Button(root, text="↙️", font=(None, 18), command=lambda: choose("line2"))
-line2_btn.grid(row=3, column=1)
-plus_btn = Button(root, text="➕", font=(None, 21), command=lambda: choose("plus"))
-plus_btn.grid(row=4, column=1)
-minus_btn = Button(root, text="➖", font=(None, 21), command=lambda: choose("minus"))
-minus_btn.grid(row=5, column=1)
+circle_btn = Button(root, text="🔴", font=(None, 58), command=lambda: choose("circle"))
+circle_btn.grid(row=0, column=2)
+line1_btn = Button(root, text="↘️", font=(None, 45), command=lambda: choose("line1"))
+line1_btn.grid(row=0, column=3)
+line2_btn = Button(root, text="↙️", font=(None, 45), command=lambda: choose("line2"))
+line2_btn.grid(row=0, column=4)
+plus_btn = Button(root, text="➕", font=(None, 52), command=lambda: choose("plus"))
+plus_btn.grid(row=0, column=5)
+minus_btn = Button(root, text="➖", font=(None, 52), command=lambda: choose("minus"))
+minus_btn.grid(row=0, column=6)
 
-canvas = Canvas(width=560, height=360, bg='white')
+canvas = Canvas(width=960, height=760, bg='white')
 canvas.grid(row=0, column=0, rowspan=7)
 
 size = Label(root, text=line_size, font=(None, 25), fg=color)
